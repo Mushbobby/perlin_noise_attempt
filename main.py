@@ -9,7 +9,7 @@ from pygame import QUIT
 dimensions = 400
 grid = [[round(random.uniform(0, 0.7), 3) for x in range(dimensions)] for y in range(dimensions)]
 cur_time = time.time()
-dtime = 0
+change_in_time = 0
 counter = 0
 
 # PYGAME
@@ -90,8 +90,8 @@ def averaged_matrix():
 def stats():
     global counter
     global cur_time
-    global dtime
-    delta_time = dtime - cur_time
+    global change_in_time
+    delta_time = change_in_time - cur_time
     avg = counter / delta_time
     print(f"iterations: {counter}, time started: {cur_time}, program time: {dtime - cur_time}, iter/second: {avg}")
 
@@ -117,7 +117,7 @@ try:
         pygame.display.flip()
         dtime = time.time()
         counter += 1
-        new_grid()
+        #new_grid()
         time.sleep(6)
         # Adjust the speed of the simulation
 
