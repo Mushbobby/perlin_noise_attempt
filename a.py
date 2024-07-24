@@ -10,7 +10,7 @@ import pygame
 from pygame import QUIT
 
 # BASE VARIABLES
-dimensions = 500
+dimensions = 100
 grid = [[[random.randint(0, 255), random.randint(0, 255), random.randint(0, 255)] for x in range(dimensions)] for y in
         range(dimensions)]
 cur_time = time.time()
@@ -34,7 +34,7 @@ def new_grid():
             in range(dimensions)]
 
 
-def averaging_function(x, y, shape, radius):
+def averaging_function(y, x, shape, radius):
     global grid
     global dimensions
     r = []
@@ -67,26 +67,25 @@ def averaging_function(x, y, shape, radius):
     for dx, dy in directions:
         nx, ny = x + dx, y + dy
         if 0 <= nx < dimensions and 0 <= ny < dimensions:
-            r.append(grid[y][x][0])
-            g.append(grid[y][x][1])
-            b.append(grid[y][x][2])
+            r.append(grid[ny][nx][0])
+            g.append(grid[ny][nx][1])
+            b.append(grid[ny][nx][2])
 
     # Calculate the average
     ra = sum(r) / len(r)
     ga = sum(g) / len(g)
-    ba = sum(g) / len(g)
+    ba = sum(b) / len(b)
     return int(ra), int(ga), int(ba)
 
 
 def averaged_matrix():
     global grid
     global dimensions
-    new_matrix = [[[0,0,0]] * dimensions for _ in range(dimensions)]
+    new_matrix = [[[0, 0, 0]] * dimensions for _ in range(dimensions)]
 
-    for y in range(dimensions):
-        for x in range(dimensions):
-            new_matrix[y][x] = averaging_function(x, y, 'square', 1)
-
+    for i in range(dimensions):
+        for j in range(dimensions):
+            new_matrix[i][j] = averaging_function(i, j, 'circle', 3)
     grid = new_matrix
 
 
@@ -103,8 +102,8 @@ def stats():
 def draw_grid():
     for y in range(dimensions):
         for x in range(dimensions):
-            color = (grid[y][x])
-            pygame.draw.rect(window, color, pygame.Rect(x * cell_size, y * cell_size, cell_size, cell_size))
+            colour = grid[y][x]
+            pygame.draw.rect(window, colour, pygame.Rect(x * cell_size, y * cell_size, cell_size, cell_size))
 
 
 try:
@@ -114,15 +113,14 @@ try:
                 pygame.quit()
                 stats()
                 sys.exit()
-        # averaged_matrix()
         window.fill((0, 0, 0))
         draw_grid()
         pygame.display.flip()
+        averaged_matrix()
         change_in_time = time.time()
         counter += 1
-        new_grid()
-        time.sleep(0.1)
-        # Adjust the speed of the simulation
+        # new_grid()
+        #time.sleep(3)
 
 except KeyboardInterrupt:
     stats()

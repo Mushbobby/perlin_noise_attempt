@@ -6,8 +6,8 @@ import pygame
 from pygame import QUIT
 
 # BASE VARIABLES
-dimensions = 400
-grid = [[round(random.uniform(0, 0.7), 3) for x in range(dimensions)] for y in range(dimensions)]
+dimensions = 1000
+grid = [[round(random.uniform(-0.5, 0.5), 3) for x in range(dimensions)] for y in range(dimensions)]
 cur_time = time.time()
 change_in_time = 0
 counter = 0
@@ -82,7 +82,7 @@ def averaged_matrix():
 
     for y in range(dimensions):
         for x in range(dimensions):
-            new_matrix[y][x] = averaging_function(x, y, 'circle', 3)
+            new_matrix[y][x] = averaging_function(x, y, 'circle', 4)
 
     grid = new_matrix
 
@@ -104,6 +104,7 @@ def draw_grid():
             pygame.draw.rect(window, color, pygame.Rect(x * cell_size, y * cell_size, cell_size, cell_size))
 
 
+counter1 = 0
 try:
     while True:
         for event in pygame.event.get():
@@ -111,14 +112,15 @@ try:
                 pygame.quit()
                 stats()
                 sys.exit()
-        averaged_matrix()
+        if counter1 == 0:
+            averaged_matrix()
         window.fill((0, 0, 0))
         draw_grid()
         pygame.display.flip()
         dtime = time.time()
         counter += 1
-        #new_grid()
-        time.sleep(6)
+        counter1 += 1
+        # new_grid()
         # Adjust the speed of the simulation
 
 except KeyboardInterrupt:
