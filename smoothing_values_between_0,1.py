@@ -93,7 +93,7 @@ def stats():
     global change_in_time
     delta_time = change_in_time - cur_time
     avg = counter / delta_time
-    print(f"iterations: {counter}, time started: {cur_time}, program time: {dtime - cur_time}, iter/second: {avg}")
+    print(f"iterations: {counter}, time started: {cur_time}, program time: {change_in_time - cur_time}, iter/second: {avg}")
 
 
 # Function to draw the grid
